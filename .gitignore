@@ -3,6 +3,7 @@
 
 # Dossiers privés ou de sauvegarde
 .private/
+stock/
 *.bak
 *.tmp
 
