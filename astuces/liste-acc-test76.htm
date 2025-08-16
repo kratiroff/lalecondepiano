@@ -1,0 +1,1026 @@
+<html>
+<head>
+<title>ACCORDS Piano</title>
+
+<script language="JavaScript" fptype="dynamicanimation">
+function dynAnimation() {}
+function clickSwapImg() {}
+</script>
+
+<script language="JavaScript1.2" fptype="dynamicanimation" src="../animate.js"> </script>
+<link href="../stylecssleconpiano.css" rel="stylesheet" type="text/css">
+</head>
+
+<script language="JavaScript">
+<!--
+
+var myvari = ""
+var myvarb = ""
+var ips = 0
+var incr2= 0
+
+if (document.images) {
+  var blank = new Image()
+  blank.src = "vpcblank.gif"
+
+  var select = new Image()
+  select.src = "vpcselect.gif"
+
+  var scalfil = new Image()
+  scalfil.src = "vpcscalfil.gif"
+
+  var black = new Image()
+  black.src = "vpcblack.gif"
+
+}
+
+function go() {
+ips = 0
+	if (document.keyform.cordscal[0].checked == 1) {
+		x = document.keyform.formula.options.selectedIndex;
+		chordcode = document.keyform.formula.options[x].value;
+	dispch(chordcode);
+        myvari = chordcode
+        myvarb = chordcode
+	}
+	else if (document.keyform.cordscal[1].checked == 1) {
+	scalecalc();
+	}
+	else if (document.keyform.cordscal[2].checked == 1) {
+			if (document.keyform.notesnum[2].checked == 1) {
+			scalecalc();
+			}
+			else {
+                        ConvertInput();
+			dispch(chordcode);
+                        myvari = chordcode
+                        myvarb = chordcode
+			}
+	}
+
+}
+
+function dispch(formulatext) {
+
+z = document.keyform.root.options.selectedIndex;
+root = document.keyform.root.options[z].value;
+
+if (document.keyform.notesnum[2].checked != 1) {
+	if (formulatext.charAt(0) != "1") {
+	userinput = document.keyform.forminput.value;
+		if (document.keyform.cordscal[2].checked == 1) {
+				if (userinput.charAt(0) != "1") {
+				a = Number.NaN
+				}
+		}
+		else {
+		a = parseFloat(root) + 12
+		}
+	}
+	else {
+	a = Number.NaN
+	}
+}
+formstring = ""
+inact();
+
+playnote(a);
+
+if (document.keyform.cordscal[2].checked == 1) {
+	if (document.keyform.notesnum[1].checked != 1) {
+		a = parseFloat(root) + 12
+	}
+	else {
+			a = 13
+	}
+}
+else {
+	a = parseFloat(root) + 12
+}
+
+b = 0
+
+d = formulatext.length / 2
+
+for (var i = 0; i < d; i++) {
+b = formulatext.indexOf(",")
+myvar = parseFloat(formulatext.substring(0, b)) + a - 1
+playnote(myvar);
+formulatext = formulatext.substring(b + 1 , formulatext.length)
+}
+
+dispstring = formstring.substring(0, (formstring.length - 1));
+document.keyform.formdisp.value = dispstring;
+}
+
+function playnote(note) {
+  if (document.images){
+	  if (note == 1){
+	  playkey(1)
+	  formstring = formstring + 'C,'
+	  }
+	  if (note == 2){
+	  playsharp(1)
+	  formstring = formstring + 'C#,'
+	  }
+	  if (note == 3){
+	  formstring = formstring + 'D,'
+	  playkey(2)
+	  }
+	  if (note == 4){
+	  formstring = formstring + 'Eb,'
+	  playsharp(2)
+	  }
+	  if (note == 5){
+	  formstring = formstring + 'E,'
+	  playkey(3)
+	  }
+	  if (note == 6){
+	  formstring = formstring + 'F,'
+	  playkey(4)
+	  }
+	  if (note == 7){
+	  playsharp(3)
+	  }
+	  if (note == 8){
+	  formstring = formstring + 'G,'
+	  playkey(5)
+	  }
+	  if (note == 9){
+	  formstring = formstring + 'G#,'
+	  playsharp(4)
+	  }
+	  if (note == 10){
+	  formstring = formstring + 'A,'
+	  playkey(6)
+	  }
+	  if (note == 11){
+	  formstring = formstring + 'A#,'
+	  playsharp(5)
+	  }
+	  if (note == 12){
+	  formstring = formstring + 'B,'
+	  playkey(7)
+	  }
+	  if (note == 13){
+	  formstring = formstring + 'C (DO)  +'
+	  playkey(8)
+	  }
+	  if (note == 14){
+	  formstring = formstring + 'C# (DO#)  +'
+	  playsharp(6)
+	  }
+	  if (note == 15){
+	  formstring = formstring + 'D (RE)  +'
+	  playkey(9)
+	  }
+	  if (note == 16){
+	  formstring = formstring + 'Eb (MIb)  +'
+	  playsharp(7)
+	  }
+	  if (note == 17){
+	  formstring = formstring + 'E (MI)  +'
+	  playkey(10)
+	  }
+	  if (note == 18){
+	  formstring = formstring + 'F (FA)  +'
+	  playkey(11)
+	  }
+	  if (note == 19){
+	  formstring = formstring + 'F# (FA#)   +'
+	  playsharp(8)
+	  }
+	  if (note == 20){
+	  formstring = formstring + 'G (SOL)   +'
+	  playkey(12)
+	  }
+	  if (note == 21){
+	  formstring = formstring + 'G# (SOL#)   +'
+	  playsharp(9)
+	  }
+	  if (note == 22){
+	  formstring = formstring + 'A (LA)  +'
+	  playkey(13)
+	  }
+	  if (note == 23){
+	  formstring = formstring + 'A# (LA#)  +'
+	  playsharp(10)
+	  }
+	  if (note == 24){
+	  formstring = formstring + 'B (SI)   +'
+	  playkey(14)
+	  }
+	  if (note == 25){
+	  formstring = formstring + 'C (DO)  +'
+	  playkey(15)
+	  }
+	  if (note == 26){
+	  formstring = formstring + 'C# (DO#)   +'
+	  playsharp(11)
+	  }
+	  if (note == 27){
+	  formstring = formstring + 'D (RE)   +'
+	  playkey(16)
+	  }
+	  if (note == 28){
+	  formstring = formstring + 'Eb (MIb)   +'
+	  playsharp(12)
+	  }
+	  if (note == 29){
+	  formstring = formstring + 'E (MI)  +'
+	  playkey(17)
+	  }
+	  if (note == 30){
+	  formstring = formstring + 'F (FA)  +'
+	  playkey(18)
+	  }
+	  if (note == 31){
+	  formstring = formstring + 'F# (FA#) +'
+	  playsharp(13)
+	  }
+	  if (note == 32){
+	  formstring = formstring + 'G (SOL)  +'
+	  playkey(19)
+	  }
+	  if (note == 33){
+	  formstring = formstring + 'G# (SOL#) +'
+	  playsharp(14)
+	  }
+	  if (note == 34){
+	  formstring = formstring + 'A (LA) +'
+	  playkey(20)
+	  }
+	  if (note == 35){
+	  formstring = formstring + 'A# (LA#) +'
+	  playsharp(15)
+	  }
+	  if (note == 36){
+	  formstring = formstring + 'B (SI)'
+	  playkey(21)
+	  }
+   }
+}
+
+function playkey(note){
+	if (document.keyform.cordscal[1].checked == 1) {
+	  document.images['t' + note +''].src = eval('scalfil.src')
+	  document.images['m' + note +''].src = eval('scalfil.src')
+	  document.images['b' + note +''].src = eval('scalfil.src')
+	}
+        else if (document.keyform.cordscal[2].checked == 1) {
+             if (document.keyform.notesnum[2].checked == 1) {
+              document.images['t' + note +''].src = eval('scalfil.src')
+	      document.images['m' + note +''].src = eval('scalfil.src')
+	      document.images['b' + note +''].src = eval('scalfil.src')  
+             }
+             else {
+	      document.images['t' + note +''].src = eval('select.src')
+	      document.images['m' + note +''].src = eval('select.src')
+	      document.images['b' + note +''].src = eval('select.src')    
+             }
+        }
+        else {
+	      document.images['t' + note +''].src = eval('select.src')
+	      document.images['m' + note +''].src = eval('select.src')
+	      document.images['b' + note +''].src = eval('select.src')    
+        }
+}
+
+function playsharp(note){
+	if (document.keyform.cordscal[1].checked == 1) {
+	  document.images['s' + note +'b1'].src = eval('scalfil.src')
+	  document.images['s' + note +'b2'].src = eval('scalfil.src')
+	  document.images['s' + note +'b3'].src = eval('scalfil.src')
+	}
+        else if (document.keyform.cordscal[2].checked == 1) {
+             if (document.keyform.notesnum[2].checked == 1) {
+              document.images['s' + note +'b1'].src = eval('scalfil.src')
+              document.images['s' + note +'b2'].src = eval('scalfil.src')
+	      document.images['s' + note +'b3'].src = eval('scalfil.src')
+              }
+             else {
+	      document.images['s' + note +'b1'].src = eval('select.src')
+	      document.images['s' + note +'b2'].src = eval('select.src')
+              document.images['s' + note +'b3'].src = eval('select.src')
+             }
+        }
+             else {
+	      document.images['s' + note +'b1'].src = eval('select.src')
+	      document.images['s' + note +'b2'].src = eval('select.src')
+              document.images['s' + note +'b3'].src = eval('select.src')
+             }
+
+}
+
+function inact() {
+  if (document.images){
+	for (var i = 1; i < 22; i++) {
+		if (document.images['t' + i +''].src != blank.src) {
+	  document.images['t' + i +''].src = eval('blank.src')
+	  document.images['m' + i +''].src = eval('blank.src')
+	  document.images['b' + i +''].src = eval('blank.src')
+		}
+	}
+	for (var i = 1; i < 16; i++) {
+		if (document.images['s' + i +'b1'].src != black.src) {
+	  document.images['s' + i +'b1'].src = eval('black.src')
+	  document.images['s' + i +'b2'].src = eval('black.src')
+	  document.images['s' + i +'b3'].src = eval('black.src')
+		}
+	}
+
+   }
+}
+
+function ConvertInput() {
+
+formulastring = ""
+
+userinput = document.keyform.forminput.value;
+
+	if (userinput.indexOf(",", 0) != -1) {
+		if (userinput.charAt(userinput.length - 1) != ",") {
+			userinput = userinput + ",";
+		}
+
+	getValue(userinput);
+
+	}
+	else {
+		error();
+	}
+	chordcode = formulastring + ","
+dispch(chordcode);
+}
+
+function error() {
+alert ("You did not enter the formula correctly");
+}
+
+function getValue(inputvar) {
+	if (inputvar.indexOf(",", 0) != -1) {
+		value = inputvar.substring(0, inputvar.indexOf(",", 0))
+		valueb = inputvar.substring((inputvar.indexOf(",", 0) + 1), inputvar.length)
+		changeValue(value);
+		getValue(valueb)
+	}
+}
+
+function changeValue(value) {
+	if (value.length != 1) {
+		if (value.indexOf("b", 0) != -1) {
+		comp = -1
+		}
+		else if (value.indexOf("#", 0) != -1) {
+		comp = 1
+		}
+	}
+	else {
+	   comp = 0
+	}
+
+if (document.keyform.notesnum[0].checked == 1) {
+   if (value.length <= 2) {
+	if (value.indexOf("1", 0) != -1) {
+		if (value.indexOf("10", 0) != -1) {
+		keypress = 17 + comp
+		formulastring = formulastring + keypress + ",";
+		}
+		else if (value.indexOf("11", 0) != -1) {
+		keypress = 18 + comp
+		formulastring = formulastring + keypress + ",";
+		}
+		else if (value.indexOf("12", 0) != -1) {
+		keypress = 20 + comp
+		formulastring = formulastring + keypress + ",";
+		}
+		else if (value.indexOf("13", 0) != -1) {
+		keypress = 21 + comp
+		formulastring = formulastring + keypress + ",";
+		}
+		else {
+		keypress = 1 + comp
+		formulastring = formulastring + keypress + ",";
+		}
+	}
+	else if (value.indexOf("2", 0) != -1) {
+	keypress = 3 + comp
+	formulastring = formulastring + keypress + ",";
+	}
+	else if (value.indexOf("3", 0) != -1) {
+	keypress = 5 + comp
+	formulastring = formulastring + keypress + ",";
+	}
+	else if (value.indexOf("4", 0) != -1) {
+	keypress = 6 + comp
+	formulastring = formulastring + keypress + ",";
+	}
+	else if (value.indexOf("5", 0) != -1) {
+	keypress = 8 + comp
+	formulastring = formulastring + keypress + ",";
+	}
+	else if (value.indexOf("6", 0) != -1) {
+	keypress = 10 + comp
+	formulastring = formulastring + keypress + ",";
+	}
+	else if (value.indexOf("7", 0) != -1) {
+	keypress = 12 + comp
+	formulastring = formulastring + keypress + ",";
+	}
+	else if (value.indexOf("8", 0) != -1) {
+	keypress = 13 + comp
+	formulastring = formulastring + keypress + ",";
+	}
+	else if (value.indexOf("9", 0) != -1) {
+	keypress = 15 + comp
+	formulastring = formulastring + keypress + ",";
+	}
+   }
+}
+else {
+	a = 0
+	if (value.indexOf("1", 0) != -1) {
+	a = a - 12
+	}
+	else if (value.indexOf("3", 0) != -1) {
+	a = a + 12
+	}
+	comp= comp + a
+	if (value.indexOf("C", 0) != -1) {
+	keypress = 1 + comp
+	formulastring = formulastring + keypress + ",";
+	}
+	else if (value.indexOf("D", 0) != -1) {
+	keypress = 3 + comp
+	formulastring = formulastring + keypress + ",";
+	}
+	else if (value.indexOf("E", 0) != -1) {
+	keypress = 5 + comp
+	formulastring = formulastring + keypress + ",";
+	}
+	else if (value.indexOf("F", 0) != -1) {
+	keypress = 6 + comp
+	formulastring = formulastring + keypress + ",";
+	}
+	else if (value.indexOf("G", 0) != -1) {
+	keypress = 8 + comp
+	formulastring = formulastring + keypress + ",";
+	}
+	else if (value.indexOf("A", 0) != -1) {
+	keypress = 10 + comp
+	formulastring = formulastring + keypress + ",";
+	}
+	else if (value.indexOf("B", 0) != -1) {
+	keypress = 12 + comp
+	formulastring = formulastring + keypress + ",";
+	}
+	comp = 0
+}
+}
+
+function openhelp() {
+  remote = window.open("help.html","remotewin","width=350,height=400,scrollbars=yes");
+}
+
+function scalecalc(){
+
+scaletext = "";
+scaletext1 = "";
+scaletext2 = "";
+scaletext3 = "";
+
+u = 1
+t = 0
+i = 0
+
+if (document.keyform.cordscal[1].checked == 1) {
+x = document.keyform.scale.options.selectedIndex;
+scalevalue = document.keyform.scale.options[x].value.toUpperCase()
+}
+else if (document.keyform.cordscal[2].checked == 1) {
+		if (document.keyform.notesnum[2].checked == 1) {
+		scalevalue = document.keyform.forminput.value.toUpperCase()
+		}
+		else {
+		scalevalue = document.keyform.forminput.value.toUpperCase()
+		}
+}
+
+for (var y = 0; y < scalevalue.length; y++) {
+	if (scalevalue.charAt(y) == "1") {
+	t = 1 + u
+	scaletext = scaletext +  t + ",";
+       	scaletext1 = scaletext1 +  (t - 12) + ",";
+       	scaletext2 = scaletext2 +  (t + 12) + ",";
+       	scaletext3 = scaletext3 +  (t - 24) + ",";
+	}
+	else if (scalevalue.charAt(y) == "2") {
+	t = 2 + u
+	scaletext = scaletext +  t + ",";
+       	scaletext1 = scaletext1 +  (t - 12) + ",";
+       	scaletext2 = scaletext2 +  (t + 12) + ",";
+       	scaletext3 = scaletext3 +  (t - 24) + ",";
+	}
+	else if (scalevalue.charAt(y) == "3") {
+	t = 3 + u
+	scaletext = scaletext +  t + ",";
+       	scaletext1 = scaletext1 +  (t - 12) + ",";
+       	scaletext2 = scaletext2 +  (t + 12) + ",";
+       	scaletext3 = scaletext3 +  (t - 24) + ",";
+	}
+	else if (scalevalue.charAt(y) == "4") {
+	t = 4 + u
+	scaletext = scaletext +  t + ",";
+       	scaletext1 = scaletext1 +  (t - 12) + ",";
+       	scaletext2 = scaletext2 +  (t + 12) + ",";
+       	scaletext3 = scaletext3 +  (t - 24) + ",";
+	}
+	else if (scalevalue.charAt(y) == "5") {
+	t = 5 + u
+	scaletext = scaletext +  t + ",";
+       	scaletext1 = scaletext1 +  (t - 12) + ",";
+       	scaletext2 = scaletext2 +  (t + 12) + ",";
+       	scaletext3 = scaletext3 +  (t - 24) + ",";
+	}
+	else if (scalevalue.charAt(y) == "6") {
+	t = 6 + u
+	scaletext = scaletext +  t + ",";
+       	scaletext1 = scaletext1 +  (t - 12) + ",";
+       	scaletext2 = scaletext2 +  (t + 12) + ",";
+       	scaletext3 = scaletext3 +  (t - 24) + ",";
+	}
+	else if (scalevalue.charAt(y) == "7") {
+	t = 7 + u
+	scaletext = scaletext +  t + ",";
+       	scaletext1 = scaletext1 +  (t - 12) + ",";
+       	scaletext2 = scaletext2 +  (t + 12) + ",";
+       	scaletext3 = scaletext3 +  (t - 24) + ",";
+	}
+	else if (scalevalue.charAt(y) == "8") {
+	t = 8 + u
+	scaletext = scaletext +  t + ",";
+       	scaletext1 = scaletext1 +  (t - 12) + ",";
+       	scaletext2 = scaletext2 +  (t + 12) + ",";
+       	scaletext3 = scaletext3 +  (t - 24) + ",";
+	}
+	else if (scalevalue.charAt(y) == "9") {
+	t = 9 + u
+	scaletext = scaletext +  t + ",";
+       	scaletext1 = scaletext1 +  (t - 12) + ",";
+       	scaletext2 = scaletext2 +  (t + 12) + ",";
+       	scaletext3 = scaletext3 +  (t - 24) + ",";
+	}
+u = t
+}
+
+if (document.keyform.lingerscal.checked == 1) {
+totalscale =  scaletext + scaletext1 + scaletext3 + scaletext2 
+}
+else {
+totalscale = scaletext
+}
+dispch(totalscale);
+}
+
+function inverter() {
+ndums = (ips*2) + incr2
+      if (ndums >= myvarb.length) {
+      ndums = 0
+      ips = -1
+      myvari = myvarb
+      incr2= 0
+      }
+      else {
+           if (myvarb.charAt(ndums +1) != ","){
+              chartf = myvarb.substring(ndums, (myvarb.indexOf(",")+ ndums +1))
+              incr = 2
+              incr2= 1
+           }
+           else {
+              chartf = myvarb.substring(ndums, (myvarb.indexOf(",")+ ndums))
+              incr = 1
+              incr2= 0
+           }
+           tochange = parseFloat(chartf) 
+           myvari = myvarb.substring(0, ndums) + (tochange - 12) + myvarb.substring((ndums + incr), myvarb.length)
+      }
+dispch(myvari);
+ips ++
+}
+// -->
+</script>
+
+
+<body>
+<center>
+  <span class="styletitre">Les accords de piano </span> 
+  <form name="keyform">
+    <table border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+      <tr>
+      <td colspan="4" bgcolor="#ffffff">
+        <table border="0" cellpadding="1" bgcolor="#ffffff">
+          <tr>
+            <td colspan="4" bgcolor="#ffffff"><center>
+                  <table border="0" cellpadding="0" cellspacing="0" width="471">
+                <tr>
+                  <td colspan="103" height="1"><img src="vpcfiller.gif" width="471" height="1"></td>
+                </tr>
+                <tr>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="15"><img name="t1" src="vpcblank.gif" width="15" height="60"></td>
+
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td><img name="s1b1" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img name="s1b2" src="vpcblack.gif" width="1" height="60"></td>
+                  <td><img name="s1b3" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="12"><img src="vpcblank.gif" name="t2" width="12" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td><img name="s2b1" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img name="s2b2" src="vpcblack.gif" width="1" height="60"></td>
+
+                  <td><img name="s2b3" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="12"><img name="t3" src="vpcblank.gif" width="12" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="14"><img src="vpcblank.gif" name="t4" width="14" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td><img name="s3b1" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img name="s3b2" src="vpcblack.gif" width="1" height="60"></td>
+                  <td><img name="s3b3" src="vpcblack.gif" width="5" height="60"></td>
+
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="12"><img name="t5" src="vpcblank.gif" width="12" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td><img name="s4b1" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img name="s4b2" src="vpcblack.gif" width="1" height="60"></td>
+                  <td><img name="s4b3" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="12"><img name="t6" src="vpcblank.gif" width="12" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+
+                  <td><img name="s5b1" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img name="s5b2" src="vpcblack.gif" width="1" height="60"></td>
+                  <td><img name="s5b3" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="13"><img name="t7" src="vpcblank.gif" width="13" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="15"><img name="t8" src="vpcblank.gif" width="15" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td><img name="s6b1" src="vpcblack.gif" width="5" height="60"></td>
+
+                  <td><img name="s6b2" src="vpcblack.gif" width="1" height="60"></td>
+                  <td><img name="s6b3" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="12"><img src="vpcblank.gif" name="t9" width="12" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td><img name="s7b1" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img name="s7b2" src="vpcblack.gif" width="1" height="60"></td>
+                  <td><img name="s7b3" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+
+                  <td width="12"><img name="t10" src="vpcblank.gif" width="12" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="14"><img src="vpcblank.gif" name="t11" width="14" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td><img name="s8b1" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img name="s8b2" src="vpcblack.gif" width="1" height="60"></td>
+                  <td><img name="s8b3" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="12"><img src="vpcblank.gif" name="t12" width="12" height="60"></td>
+
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td><img name="s9b1" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img name="s9b2" src="vpcblack.gif" width="1" height="60"></td>
+                  <td><img name="s9b3" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="12"><img name="t13" src="vpcblank.gif" width="12" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td><img name="s10b1" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img name="s10b2" src="vpcblack.gif" width="1" height="60"></td>
+
+                  <td><img name="s10b3" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="12"><img name="t14" src="vpcblank.gif" width="12" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="15"><img src="vpcblank.gif" name="t15" width="15" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td><img name="s11b1" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img name="s11b2" src="vpcblack.gif" width="1" height="60"></td>
+                  <td><img name="s11b3" src="vpcblack.gif" width="5" height="60"></td>
+
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="12"><img src="vpcblank.gif" name="t16" width="12" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td><img name="s12b1" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img name="s12b2" src="vpcblack.gif" width="1" height="60"></td>
+                  <td><img name="s12b3" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="12"><img name="t17" src="vpcblank.gif" width="12" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+
+                  <td width="14"><img name="t18" src="vpcblank.gif" width="14" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td><img name="s13b1" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img name="s13b2" src="vpcblack.gif" width="1" height="60"></td>
+                  <td><img name="s13b3" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="12"><img name="t19" src="vpcblank.gif" width="12" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td><img name="s14b1" src="vpcblack.gif" width="5" height="60"></td>
+
+                  <td><img name="s14b2" src="vpcblack.gif" width="1" height="60"></td>
+                  <td><img name="s14b3" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td width="12"><img name="t20" src="vpcblank.gif" width="12" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                  <td><img name="s15b1" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img name="s15b2" src="vpcblack.gif" width="1" height="60"></td>
+                  <td><img name="s15b3" src="vpcblack.gif" width="5" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+
+                  <td width="13"><img name="t21" src="vpcblank.gif" width="13" height="60"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="60"></td>
+                </tr>
+                <tr>
+                  <td height="1" width="1"><img src="vpcfiller.gif" width="1" height="1"></td>
+                  <td height="1" width="15"><img src="vpcblank.gif" name="m1" width="15" height="1"></td>
+                  <td height="1" width="13" colspan="5"><img src="vpcfiller.gif" width="13" height="1"></td>
+                  <td height="1" width="12"><img src="vpcblank.gif" name="m2" width="12" height="1"></td>
+                  <td height="1" width="13" colspan="5"><img src="vpcfiller.gif" width="13" height="1"></td>
+
+                  <td height="1" width="12"><img src="vpcblank.gif" name="m3" width="12" height="1"></td>
+                  <td height="1" width="1"><img src="vpcfiller.gif" width="1" height="1"></td>
+                  <td height="1" width="14"><img src="vpcblank.gif" name="m4" width="14" height="1"></td>
+                  <td height="1" width="13" colspan="5"><img src="vpcfiller.gif" width="13" height="1"></td>
+                  <td height="1" width="12"><img src="vpcblank.gif" name="m5" width="12" height="1"></td>
+                  <td height="1" width="13" colspan="5"><img src="vpcfiller.gif" width="13" height="1"></td>
+                  <td height="1" width="12"><img src="vpcblank.gif" name="m6" width="12" height="1"></td>
+                  <td height="1" width="13" colspan="5"><img src="vpcfiller.gif" width="13" height="1"></td>
+                  <td height="1" width="13"><img src="vpcblank.gif" name="m7" width="13" height="1"></td>
+
+                  <td height="1" width="1"><img src="vpcfiller.gif" width="1" height="1"></td>
+                  <td height="1" width="15"><img src="vpcblank.gif" name="m8" width="15" height="1"></td>
+                  <td height="1" width="13" colspan="5"><img src="vpcfiller.gif" width="13" height="1"></td>
+                  <td height="1" width="12"><img src="vpcblank.gif" name="m9" width="12" height="1"></td>
+                  <td height="1" width="13" colspan="5"><img src="vpcfiller.gif" width="13" height="1"></td>
+                  <td height="1" width="12"><img src="vpcblank.gif" name="m10" width="12" height="1"></td>
+                  <td height="1" width="1"><img src="vpcfiller.gif" width="1" height="1"></td>
+                  <td height="1" width="14"><img src="vpcblank.gif" name="m11" width="14" height="1"></td>
+                  <td height="1" width="13" colspan="5"><img src="vpcfiller.gif" width="13" height="1"></td>
+
+                  <td height="1" width="12"><img src="vpcblank.gif" name="m12" width="12" height="1"></td>
+                  <td height="1" width="13" colspan="5"><img src="vpcfiller.gif" width="13" height="1"></td>
+                  <td height="1" width="12"><img src="vpcblank.gif" name="m13" width="12" height="1"></td>
+                  <td height="1" width="13" colspan="5"><img src="vpcfiller.gif" width="13" height="1"></td>
+                  <td height="1" width="12"><img src="vpcblank.gif" name="m14" width="12" height="1"></td>
+                  <td height="1" width="1"><img src="vpcfiller.gif" width="1" height="1"></td>
+                  <td height="1" width="15"><img src="vpcblank.gif" name="m15" width="15" height="1"></td>
+                  <td height="1" width="13" colspan="5"><img src="vpcfiller.gif" width="13" height="1"></td>
+                  <td height="1" width="12"><img src="vpcblank.gif" name="m16" width="12" height="1"></td>
+
+                  <td height="1" width="13" colspan="5"><img src="vpcfiller.gif" width="13" height="1"></td>
+                  <td height="1" width="12"><img src="vpcblank.gif" name="m17" width="12" height="1"></td>
+                  <td height="1" width="1"><img src="vpcfiller.gif" width="1" height="1"></td>
+                  <td height="1" width="14"><img src="vpcblank.gif" name="m18" width="14" height="1"></td>
+                  <td height="1" width="13" colspan="5"><img src="vpcfiller.gif" width="13" height="1"></td>
+                  <td height="1" width="12"><img src="vpcblank.gif" name="m19" width="12" height="1"></td>
+                  <td height="1" width="13" colspan="5"><img src="vpcfiller.gif" width="13" height="1"></td>
+                  <td height="1" width="12"><img src="vpcblank.gif" name="m20" width="12" height="1"></td>
+                  <td height="1" width="13" colspan="5"><img src="vpcfiller.gif" width="13" height="1"></td>
+
+                  <td height="1" width="13"><img src="vpcblank.gif" name="m21" width="13" height="1"></td>
+                  <td height="1" width="1"><img src="vpcfiller.gif" width="1" height="1"></td>
+                </tr>
+                <tr>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="21" colspan="3"><img name="b1" src="vpcblank.gif" width="21" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="24" colspan="5"><img name="b2" src="vpcblank.gif" width="24" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+
+                  <td width="18" colspan="3"><img name="b3" src="vpcblank.gif" width="18" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="20" colspan="3"><img name="b4" src="vpcblank.gif" width="20" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="24" colspan="5"><img name="b5" src="vpcblank.gif" width="24" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="24" colspan="5"><img name="b6" src="vpcblank.gif" width="24" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="19" colspan="3"><img name="b7" src="vpcblank.gif" width="19" height="30"></td>
+
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="21" colspan="3"><img name="b8" src="vpcblank.gif" width="21" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="24" colspan="5"><img name="b9" src="vpcblank.gif" width="24" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="18" colspan="3"><img name="b10" src="vpcblank.gif" width="18" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="20" colspan="3"><img name="b11" src="vpcblank.gif" width="20" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+
+                  <td width="24" colspan="5"><img name="b12" src="vpcblank.gif" width="24" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="24" colspan="5"><img name="b13" src="vpcblank.gif" width="24" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="18" colspan="3"><img name="b14" src="vpcblank.gif" width="18" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="21" colspan="3"><img name="b15" src="vpcblank.gif" width="21" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="24" colspan="5"><img name="b16" src="vpcblank.gif" width="24" height="30"></td>
+
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="18" colspan="3"><img name="b17" src="vpcblank.gif" width="18" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="20" colspan="3"><img name="b18" src="vpcblank.gif" width="20" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="24" colspan="5"><img name="b19" src="vpcblank.gif" width="24" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                  <td width="24" colspan="5"><img name="b20" src="vpcblank.gif" width="24" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+
+                  <td width="19" colspan="3"><img name="b21" src="vpcblank.gif" width="19" height="30"></td>
+                  <td><img src="vpcfiller.gif" width="1" height="30"></td>
+                </tr>
+                <tr>
+                  <td colspan="103" height="1"><img src="vpcfiller.gif" width="471" height="1"></td>
+                </tr>
+              </table>
+                  <br>
+              </center></td>
+
+          </tr>
+          <tr>
+            <td>
+              <p align="center"><b>Fondamentale</b></p>
+            </td>
+            <td><center><input type="radio" name="cordscal" value="0" checked onclick="document.keyform.formula.focus()"><b>Accord</b></center></td>
+            <td><center><b><input type="radio" name="cordscal" onclick="document.keyform.scale.focus()" value="1">Gamme</b></center></td>
+
+            <td><center><b><input type="radio" name="cordscal" value="2" onclick="document.keyform.forminput.focus();">Formule:</b></center></td>
+          </tr>
+          <tr>
+            <td><select name="root" size="15" onchange="go()">
+                <option value="1" selected>C (DO)
+                <option value="2">C# / Db (DO# ou REb)
+                <option value="3">D (RE)
+                <option value="4">D# / Eb (RE# ou MIb)
+                <option value="5">E (MI)
+                <option value="6">F / E# (FA ou MI# attention MI# est une blanche !)
+                <option value="7">F# / Gb (FA# ou SOLb)
+                <option value="8">G (SOL)
+                <option value="9">G# / Ab (SOL# ou LAb)
+                <option value="10">A (LA)
+                <option value="11">A# / Bb (LA# ou SIb)
+                <option value="12">B / Cb (SI ou DOb attention DOb est une blanche !)
+              </select></td>
+
+            <td><select name="formula" size="15" onchange="go()" onfocus="document.keyform.cordscal[0].checked = 1; go()">
+                <option value="5,8,"selected>A CONNAITRE ABSULUEMENT			
+                <option value="5,8,">Majeur
+                <option value="4,8,">Mineur
+                <option value="5,8,11,">Dominant 7th (tr�s utilis�)
+                <option value="0">MOINS IMPORTANT				
+				<option value="4,7,">dim
+                <option value="8,">5			
+                <option value="5,8,12,">Majeur 7th
+                <option value="4,8,11,">Mineur 7th
+                <option value="4,8,12,">Minor Major 7th
+                <option value="6,8,">Sus 4
+                <option value="3,8,">Sus 2
+                <option value="5,8,10,">6
+                <option value="4,8,10,">Minor 6
+                <option value="5,8,15,">9
+                <option value="4,8,15,">Minor 9
+                <option value="5,8,16,">Major 9
+                <option value="4,8,12,14,">Minor Major 9
+                <option value="5,8,11,3,6,">11
+                <option value="4,8,11,3,6,">Minor 11
+                <option value="5,8,12,3,6,">Major 11
+                <option value="4,8,12,3,6,">Minor Major 11
+                <option value="5,8,11,3,10,">13
+                <option value="4,8,11,3,10,">Minor 13
+                <option value="5,8,12,3,10,">Major 13
+                <option value="4,8,12,3,10,">Minor Major 13
+                <option value="5,8,3,">add 9
+                <option value="4,8,3,">Minor add 9
+                <option value="5,8,10,3,">6 add 9
+                <option value="4,8,10,3,">Minor 6 add 9
+                <option value="5,8,11,6,">Dominant 7th add 11
+                <option value="5,8,12,6,">Major 7th add 11
+                <option value="4,8,11,6,">Minor 7th add 11
+                <option value="4,8,12,6,">Minor Major 7th add 11
+                <option value="5,8,11,10,">Dominant 7th add 13
+                <option value="5,8,12,10,">Major 7th add 13
+                <option value="4,8,11,10,">Minor 7th add 13
+                <option value="4,8,12,10,">Minor Major 7th add 13
+                <option value="5,7,11,">7b5
+                <option value="5,9,11,">7#5
+                <option value="5,8,11,2,">7b9
+                <option value="5,8,11,4,">7#9
+                <option value="5,9,11,2,">7#5b9
+                <option value="4,7,11,">m7b5
+                <option value="4,9,11,">m7#5
+                <option value="4,8,11,2,">m7b9
+                <option value="5,8,11,3,7,">9#11
+                <option value="5,8,11,3,9,">9b13
+                <option value="6,8,10,">6sus4
+                <option value="6,8,11,">7sus4
+                <option value="6,8,12,">Major 7th Sus4
+                <option value="6,8,11,3,">9sus4
+                <option value="6,8,12,3,">Major 9 Sus4
+              </select></td>
+
+            <td><select name="scale" size="15" onchange="go()" onfocus="document.keyform.cordscal[1].checked = 1; go()">
+                <option value="2212221"selected>A CONNAITRE ABSULUEMENT
+                <option value="2212221" >Gamme Majeur
+                <option value="2122131">Gamme Harmonique Mineur (souvent utilis�e)				
+                <option value="321132">Gamme Blues (tr�s importante)				
+                <option value="0">PEU OU PAS IMPORTANT
+                <option value="2122221">Gamme Mineur (peu utilis�e)								
+                <option value="2122221">Melodic Minor
+                <option value="22323">Pentatonic Major
+                <option value="32232">Pentatonic Minor
+                <option value="32113">Pentatonic Blues
+                <option value="2323">Pentatonic Neutral
+                <option value="2212221">Ionian
+                <option value="32122122">Aeolian
+                <option value="2122212">Dorian
+                <option value="2212212">Mixolydian
+                <option value="1222122">Phrygian
+                <option value="2221221">Lydian
+                <option value="1221222">Locrian
+                <option value="1212121">Dim half
+                <option value="2121212">Dim whole
+                <option value="22222">Whole
+                <option value="31313">Augmented
+                <option value="111111111111">Chromatic
+                <option value="2131212">Roumanian Minor
+                <option value="1312122">Spanish Gypsy
+                <option value="22323">Diatonic
+                <option value="1312131">Double Harmonic
+                <option value="12111222">Eight Tone Spanish
+                <option value="1322211">Enigmatic
+                <option value="222211">Leading Whole Tone
+                <option value="2222121">Lydian Augmented
+                <option value="1222221">Neoploitan Major
+                <option value="1222122">Neopolitan Minor
+                <option value="12341">Pelog
+                <option value="222312">Prometheus
+                <option value="132312">Prometheus Neopolitan
+                <option value="131313">Six Tone Symmetrical
+                <option value="1212222">Super Locrian
+                <option value="2221122">Lydian Minor
+                <option value="2131122">Lydian Diminished
+                <option value="211211121">Nine Tone Scale
+                <option value="21212121">Auxiliary Diminished
+                <option value="222222">Auxiliary Augmented
+                <option value="12121212">Auxiliary Diminished Blues
+                <option value="2211222">Major Locrian
+                <option value="2221212">Overtone
+                <option value="1212222">Diminished Whole Tone
+                <option value="2122122">Pure Minor
+                <option value="232212">Dominant 7th
+              </select><br>
+
+            </td>
+            <td valign="middle"><input type="radio" name="notesnum" value="0" checked>Entrer
+              un num�ro<br>
+              <input type="radio" name="notesnum" value="1">Entrer une note<br>
+              <input type="radio" name="notesnum" value="2">Entrer une gamme<br>
+              <center><input type="text" name="forminput" width="15" onfocus=" document.keyform.formdisp.value = ''; inact();  document.keyform.cordscal[2].checked = 1;" size="20"><br>
+              <input type="button" value="Montrer" name="goinput" onclick="go();"><br>
+              </center></td>
+
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td><center><input type="button" value="Inverser l'accord" name="hjh" onclick="inverter();"></center></td>
+            <td colspan="2"><center><b>Laisser la gamme couvrir le clavier:<input type="CHECKBOX" value="off" name="lingerscal" onclick="go()"></b></center></td>
+          </tr>
+          <tr>
+            <td colspan="4">
+
+              <hr noshade>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3"><center><b>Notes dans l'accord / Gamme:</b> <input type="text" name="formdisp" width="15" size="69"><br>
+                  <i>Les noms sont &agrave; partir de C</i> 
+                </center></td>
+            <td>&nbsp;</td>
+
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</form>
+</center>
+<p>Merci � Colm Mac C�rthaigh colmmacc@clubi.ie qui a �crit le programme et que 
+  j'ai largement modifi&eacute; : accord de neuvi&egrave;me </p>
+<p><a href="http://www.looknohands.com/chordhouse/piano/">un autre site sur les 
+  acords (avec les sons) : http://www.looknohands.com/chordhouse/piano/</a></p>
+</body>
+
+</html>

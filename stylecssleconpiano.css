@@ -1,0 +1,24 @@
+.styletexteclass {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #000066;
+	font-weight: bold;
+
+}
+.styletitre {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 24px;
+	color: #FF6633;
+}
+.stylemenu {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	color: #000066;
+	font-weight: bold;
+
+}
+.texte {
+	font: bold normal 14px/normal Arial, Helvetica, sans-serif;
+	text-transform: none;
+	color: #0099FF;
+}

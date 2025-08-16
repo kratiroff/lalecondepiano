@@ -1,0 +1,11 @@
+# VS Code
+.vscode/
+
+# Dossiers privés ou de sauvegarde
+.private/
+*.bak
+*.tmp
+
+# Fichiers temporaires et système
+.DS_Store
+Thumbs.db

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Titre de la page</title>
+	<meta name="description" content="Description de la page pour le référencement.">
+	<meta name="keywords" content="mot-clé1, mot-clé2, mot-clé3">
+	<meta name="author" content="Votre Nom ou Site">
+	<meta name="robots" content="index, follow">
+	<meta property="og:title" content="Titre Open Graph">
+	<meta property="og:description" content="Description Open Graph">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="http://www.lalecondepiano.com/index.html">
+	<meta property="og:image" content="http://www.lalecondepiano.com/acc.html">
+
+<style>
+	piano-chord {
+  /* from attr() */
+  --_keys: attr(keys type(<number>), 8); /* number of keys */
+   /* to make it work in Safari, we need to hardcode it (for now): */
+   --_keys: 14;
+
+  /* public properties */
+  --piano-chord-black-key: #000;
+  --piano-chord-white-key: #FFF;
+  --piano-chord-key-gap: 2px;
+
+  /* private properties */
+  --_octave-keys: 7;
+  --_ow: calc(100% / (var(--_keys) / var(--_octave-keys))); /* octave width  */
+  --_r: calc(var(--_keys) / var(--_octave-keys) * 0.6); /* ratio of black key compared to white key (60%) */
+  --_wkw: calc(100% / var(--_keys)); /* white key width  */
+  --_bkw: calc(var(--_wkw) * var(--_r)); /* black key width  */
+
+  --_off1: calc(0.7 / var(--_octave-keys) * 100%);
+  --_off2: calc(1.7 / var(--_octave-keys) * 100%);
+  --_off3: calc(3.7 / var(--_octave-keys) * 100%);
+  --_off4: calc(4.7 / var(--_octave-keys) * 100%);
+  --_off5: calc(5.7 / var(--_octave-keys) * 100%);
+  
+  background-color: var(--piano-chord-white-key);
+  background-image:
+    /* Black Keys */
+    linear-gradient(90deg,#0000 0 var(--_off1), var(--piano-chord-black-key) var(--_off1) calc(var(--_off1) + var(--_bkw)),#0000 0),
+    linear-gradient(90deg,#0000 0 var(--_off2), var(--piano-chord-black-key) var(--_off2) calc(var(--_off2) + var(--_bkw)),#0000 0),
+    linear-gradient(90deg,#0000 0 var(--_off3), var(--piano-chord-black-key) var(--_off3) calc(var(--_off3) + var(--_bkw)),#0000 0),
+    linear-gradient(90deg,#0000 0 var(--_off4), var(--piano-chord-black-key) var(--_off4) calc(var(--_off4) + var(--_bkw)),#0000 0),
+    linear-gradient(90deg,#0000 0 var(--_off5), var(--piano-chord-black-key) var(--_off5) calc(var(--_off5) + var(--_bkw)),#0000 0),
+    
+    /* White key separators */
+    linear-gradient(90deg, var(--piano-chord-black-key) var(--piano-chord-key-gap), #0000 0 var(--piano-chord-key-gap));
+  background-position: 0 0;
+  background-repeat: repeat-x;
+  background-size:
+    var(--_ow) 60%,
+    var(--_ow) 60%,
+    var(--_ow) 60%,
+    var(--_ow) 60%,
+    var(--_ow) 60%,
+    calc(100% / var(--_keys) - (var(--piano-chord-key-gap) / var(--_keys))) 100%;
+  border-block: var(--piano-chord-key-gap) solid var(--piano-chord-black-key);
+  display: grid;
+  grid-template-columns: repeat(var(--_keys), 1fr);
+  grid-template-rows: 1fr;
+  height: 150px;
+  width: 100%;
+}
+
+piano-key { display: inline-grid; }
+piano-key::after {
+  background: var(--_bg, #000);
+  border-radius: 50%;
+  content: "";
+  display: block;
+  height: 20px;
+  margin-block: 8px;
+  place-self: end center;
+  width: 20px;
+}
+
+piano-key[note="C"] {  grid-column: 1; }
+piano-key[note="C#"] { grid-column: 1; }
+piano-key[note="D"] {  grid-column: 2; }
+piano-key[note="Db"] { grid-column: 2; }
+piano-key[note="D#"] { grid-column: 2; }
+piano-key[note="E"] {  grid-column: 3; }
+piano-key[note="Eb"] { grid-column: 3; }
+piano-key[note="F"] {  grid-column: 4; }
+piano-key[note="F#"] { grid-column: 4; }
+piano-key[note="G"] {  grid-column: 5; }
+piano-key[note="Gb"] { grid-column: 5; }
+piano-key[note="G#"] { grid-column: 5; }
+piano-key[note="A"] {  grid-column: 6; }
+piano-key[note="Ab"] { grid-column: 6; }
+piano-key[note="A#"] { grid-column: 6; }
+piano-key[note="B"] {  grid-column: 7; }
+piano-key[note="Bb"] { grid-column: 7; }
+piano-key[note="C2"] {  grid-column: 8; }
+piano-key[note="C#2"] { grid-column: 8; }
+piano-key[note="D2"] {  grid-column: 9; }
+piano-key[note="Db2"] { grid-column: 9; }
+piano-key[note="D#2"] { grid-column: 9; }
+piano-key[note="E2"] {  grid-column: 10; }
+piano-key[note="Eb2"] { grid-column: 10; }
+piano-key[note="F2"] {  grid-column: 11; }
+piano-key[note="F#2"] { grid-column: 11; }
+piano-key[note="G2"] {  grid-column: 12; }
+piano-key[note="Gb2"] { grid-column: 12; }
+piano-key[note="G#2"] { grid-column: 12; }
+piano-key[note="Ab2"] { grid-column: 13; }
+piano-key[note="Bb2"] { grid-column: 14; }
+
+piano-key[note*="#"] { translate: 50% -40%; }
+piano-key[note*="b"] { translate: -50% -40%; }
+
+.FFF { --_bg: #42A3BD; }
+.pink { --_bg: #F1919C; }
+.GGG { --_bg: #fc260a; --_c: #FFF; }
+.EEE { --_bg: #ff4901; --_c: #FFF; }
+.yellow { --_bg: #f49118; }
+.hotpink { --_bg: #BD3F63; --_c: #FFF; }
+.AAA { --_bg: #DBC8B1; }
+.BBB { --_bg: #A3B18A; }
+.CCC { --_bg: #797979; }
+.DDD { --_bg: #eaf60d; }
+
+.chord {
+  background: var(--_bg) ;
+  border-radius: 3ch;
+  /* color: var(--_c, #000); */
+  display: grid;
+  gap: 2ch;
+  padding: 1.5ch 2ch 2ch;
+  h2 {
+    font-weight: 500;
+    margin: 0;
+    text-box: text;
+    font-size: 1.2em;
+  } 
+}
+
+main {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+</style>
+</head>
+
+
+
+
+
+
+
+<body>
+	<section id="section1">
+		<!-- Contenu de la section principale -->
+        <h1>Accords de Piano</h1>
+        <p>Voici quelques accords de piano courants avec leurs notes respectives.</p>
+        <p id="list">
+  C Major : C E G : DO MI SOL - C Major 7 : C E G B : DO MI SOL SI - C minor (C Eb G : Do Mib Sol), C7 (C E G Bb : Do Mi Sol Sib)
+  <br>
+  D Major : D F# A : RE FA# LA - D Minor : D F A : RE FA LA - Db Major : Db F Ab : Reb Fa Lab - Db Minor :  D♭, E♭, A♭ : Re♭ Mi♭ La♭ - D7 (D F# A C : Re Fa# La Do)
+  <br>
+  E Minor : E G B : MI SOL SI - E Major : E G# B : MI SOL# Si - Eb Major : Eb G Bb : Mib Sol Sib - Eb Minor : Eb Gb Bb : Mib SOLb SIb - E7 (E G# B D : Mi Sol# Si Re)
+  <br>
+  F Major : F A C : FA LA DO - F# Minor : F# A C# : FA# LA DO# - F Minor : F Ab C : FA LAb DO - G Minor : G Bb D : SOL SIb RE - G Major 7 : G B D F# : SOL SI RE FA# - G Major : G B D : SOL SI RE - A Minor : A C E : LA DO MI - A Major : A C# E : LA DO# MI - Ab Major : Ab C Eb : Lab Do Mib - Ab Minor : Ab B Eb : Lab SI Mib - A7 (A C# E G : La Do# Mi Sol)
+  <br>
+  B Diminished : B D F : SI RE FA - B Major : B D# F# : SI RE# FA# - Bb Major : Bb D F : Sib Re Fa - Bb Minor : Bb Db F : Sib Reb Fa - B minor (B D F# - Si Re Fa#) - Bb minor (Bb Db F - Sib Reb Fa)
+
+</p>
+<hr>
+<p style="font-size: xx-large;">
+    Si vous voulez selectionner les accords de votre choix pour les jouer plus facilement 
+    <br>
+    ou les imprimer rendez-vous sur : 
+    <br>
+    <a href="accper.html">cette page de séléction et impression</a>.
+</p>
+<br><br>
+</section>
+
+
+
+
+<section id="accords">        
+<main>
+    <div class="CCC chord">
+    <h2>C Major : C E G : DO MI SOL</h2>
+    <piano-chord chord="C" keys="14">
+      <piano-key note="C"></piano-key>
+      <piano-key note="E"></piano-key>
+      <piano-key note="G"></piano-key>
+    </piano-chord>
+  </div>
+  <div class="CCC chord">
+    <h2>C Major 7 : C E G B : DO MI SOL SI</h2>
+    <piano-chord chord="Cmaj7" keys="14">
+      <piano-key note="C"></piano-key>
+      <piano-key note="E"></piano-key>
+      <piano-key note="G"></piano-key>
+      <piano-key note="B"></piano-key>
+    </piano-chord>
+  </div>
+  
+<div class="CCC chord">
+    <h2>C minor C Eb G - Do Mib Sol</h2>
+    <piano-chord chord="Cmin" keys="14">
+      <piano-key note="C"></piano-key>
+      <piano-key note="Eb"></piano-key>
+      <piano-key note="G"></piano-key>
+    </piano-chord>
+  </div>
+
+
+  
+<div class="CCC chord">
+    <h2>C# major C# F G# - Do# Fa Sol#</h2>
+    <piano-chord chord="Cmaj#" keys="14">
+      <piano-key note="C#"></piano-key>
+      <piano-key note="F"></piano-key>
+      <piano-key note="G#"></piano-key>
+    </piano-chord>
+  </div>
+
+  <div class="CCC chord">
+    <h2>C7 C E G Bb - Do Mi Sol Sib</h2>
+    <piano-chord chord="C7" keys="14">
+      <piano-key note="C"></piano-key>
+      <piano-key note="E"></piano-key>
+      <piano-key note="G"></piano-key>
+      <piano-key note="Bb"></piano-key>
+    </piano-chord>
+  </div>
+
+
+</main>
+<br><hr><br>
+<main>
+  <div class="DDD chord">
+    <h2>D Major : D F# A : RE FA# LA</h2>
+    <piano-chord chord="D" keys="14">
+      <piano-key note="D"></piano-key>
+      <piano-key note="F#"></piano-key>
+      <piano-key note="A"></piano-key>
+    </piano-chord>
+  </div>
+  <div class="DDD chord">
+    <h2>D Minor : D F A : RE FA LA</h2>
+    <piano-chord chord="Dm" keys="14">
+      <piano-key note="D"></piano-key>
+      <piano-key note="F"></piano-key>
+      <piano-key note="A"></piano-key>
+    </piano-chord>
+  </div>
+  <div class="DDD chord">
+    <h2>Db Major : Db F Ab : Reb Fa Lab</h2>
+    <piano-chord chord="Db" keys="14">
+      <piano-key note="Db"></piano-key>
+      <piano-key note="F"></piano-key>
+      <piano-key note="Ab"></piano-key>
+    </piano-chord>
+  </div>
+    <div class="DDD chord">
+    <h2>Db Minor D♭ E♭ A♭:Re♭ Mi♭ La♭</h2>
+    <piano-chord chord="Dbm" keys="14">
+      <piano-key note="Db"></piano-key>
+      <piano-key note="Eb"></piano-key>
+      <piano-key note="Ab"></piano-key>
+    </piano-chord>
+  </div>
+  </div>
+    <div class="DDD chord">
+    <h2>D7 </h2>
+    <piano-chord chord="D7" keys="14">
+      <piano-key note="D"></piano-key>
+      <piano-key note="F#"></piano-key>
+      <piano-key note="A"></piano-key>
+      <piano-key note="C"></piano-key>
+    </piano-chord>
+  </div>
+</main>
+<br><hr><br>
+<main>
+  <div class="EEE chord">
+    <h2>E Minor : E G B : MI SOL SI</h2>
+    <piano-chord chord="Em" keys="14">
+      <piano-key note="E"></piano-key>
+      <piano-key note="G"></piano-key>
+      <piano-key note="B"></piano-key>
+    </piano-chord>
+  </div>
+  <div class="EEE chord">
+    <h2>E Major : E G# B : MI SOL# SI</h2>
+    <piano-chord chord="E" keys="14">
+      <piano-key note="E"></piano-key>
+      <piano-key note="G#"></piano-key>
+      <piano-key note="B"></piano-key>
+    </piano-chord>
+  </div>
+  <div class="EEE chord">
+    <h2>Eb Major : Eb G Bb : Mib Sol Sib</h2>
+    <piano-chord chord="Eb" keys="14">
+      <piano-key note="Eb"></piano-key>
+      <piano-key note="G"></piano-key>
+      <piano-key note="Bb"></piano-key>
+    </piano-chord>
+  </div>
+  <div class="EEE chord">
+    <h2>Eb Minor : Eb Gb Bb : Mib SOLb SIb</h2>
+    <piano-chord chord="Ebm" keys="14">
+      <piano-key note="Eb"></piano-key>
+      <piano-key note="Gb"></piano-key>
+      <piano-key note="Bb"></piano-key>
+    </piano-chord>
+  </div>
+ <div class="EEE chord">
+    <h2>E7 E G# B D - Mi Sol# Si Re</h2>
+    <piano-chord chord="E7" keys="14">
+      <piano-key note="E"></piano-key>
+      <piano-key note="G#"></piano-key>
+      <piano-key note="B"></piano-key>
+      <piano-key note="D"></piano-key>
+    </piano-chord>
+  </div>  
+</main>
+<br><hr><br>
+<main>
+  <div class="FFF chord">
+    <h2>F Major : F A C : FA LA DO</h2>
+    <piano-chord chord="F" keys="14">
+      <piano-key note="F"></piano-key>
+      <piano-key note="A"></piano-key>
+      <piano-key note="C2"></piano-key>
+    </piano-chord>
+  </div>
+  <div class="FFF chord">
+    <h2>F# Minor : F# A C# : FA# LA DO#</h2>
+    <piano-chord chord="F#m" keys="14">
+      <piano-key note="F#"></piano-key>
+      <piano-key note="A"></piano-key>
+      <piano-key note="C#2"></piano-key>
+    </piano-chord>
+  </div>
+  <div class="FFF chord">
+    <h2>F Minor : F Ab C : FA LAb DO</h2>
+    <piano-chord chord="Fm" keys="14">
+      <piano-key note="F"></piano-key>
+      <piano-key note="Ab"></piano-key>
+      <piano-key note="C2"></piano-key>
+    </piano-chord>
+  </div>
+
+</main>
+<br><hr><br>
+<main>
+  <div class="GGG chord">
+    <h2>G Minor : G Bb D : SOL SIb RE</h2>
+    <piano-chord chord="Gm" keys="14">
+      <piano-key note="G"></piano-key>
+      <piano-key note="Bb"></piano-key>
+      <piano-key note="D2"></piano-key>
+    </piano-chord>
+  </div>
+  <div class="GGG chord">
+    <h2>G Major 7 : G B D F# : SOL SI RE FA#</h2>
+    <piano-chord chord="G7" keys="14">
+      <piano-key note="G"></piano-key>
+      <piano-key note="B"></piano-key>
+      <piano-key note="D2"></piano-key>
+      <piano-key note="F#2"></piano-key>
+    </piano-chord>
+  </div>
+    <div class="GGG chord">
+    <h2>G Major : G B D : SOL SI RE</h2>
+    <piano-chord chord="G" keys="14">
+      <piano-key note="G"></piano-key>
+      <piano-key note="B"></piano-key>
+      <piano-key note="D2"></piano-key>
+    </piano-chord>
+  </div>
+</main>
+<br><hr><br>
+<main>
+  <div class="AAA chord">
+    <h2>A Minor : A C E : LA DO MI</h2>
+    <piano-chord chord="Am" keys="14">
+      <piano-key note="A"></piano-key>
+      <piano-key note="C2"></piano-key>
+      <piano-key note="E2"></piano-key>
+    </piano-chord>
+  </div>
+  <div class="AAA chord">
+    <h2>A Major : A C# E : LA DO# MI</h2>
+    <piano-chord chord="A" keys="14">
+      <piano-key note="A"></piano-key>
+      <piano-key note="C#2"></piano-key>
+      <piano-key note="E2"></piano-key>
+    </piano-chord>
+  </div>
+  <div class="AAA chord">
+    <h2>Ab Major : Ab C Eb : Lab Do Mib</h2>
+    <piano-chord chord="Ab" keys="14">
+      <piano-key note="Ab"></piano-key>
+      <piano-key note="C2"></piano-key>
+      <piano-key note="Eb2"></piano-key>
+    </piano-chord>
+  </div>
+  <div class="AAA chord">
+    <h2>Ab Minor : Ab B Eb : Lab SI Mib</h2>
+    <piano-chord chord="Abm" keys="14">
+      <piano-key note="Ab"></piano-key>
+      <piano-key note="B2"></piano-key>
+      <piano-key note="Eb2"></piano-key>
+    </piano-chord>
+  </div>
+  <div class="AAA chord">
+    <h2>A7 : A C# E G : La Do# Mi Sol</h2>
+    <piano-chord chord="A7" keys="14">
+      <piano-key note="A"></piano-key>
+      <piano-key note="C#2"></piano-key>
+      <piano-key note="E2"></piano-key>
+      <piano-key note="G2"></piano-key>
+    </piano-chord>
+  </div>
+</main>
+<br><hr><br>
+<main>
+  <div class="BBB chord">
+    <h2>B Diminished : B D F : SI RE FA</h2>
+    <piano-chord chord="Bdim" keys="14">
+      <piano-key note="B"></piano-key>
+      <piano-key note="D2"></piano-key>
+      <piano-key note="F2"></piano-key>
+    </piano-chord>
+  </div>
+  <div class="BBB chord">
+    <h2>B Major : B D# F# : SI RE# FA#</h2>
+    <piano-chord chord="B" keys="14">
+      <piano-key note="B"></piano-key>
+      <piano-key note="D#2"></piano-key>
+      <piano-key note="F#2"></piano-key>
+    </piano-chord>
+  </div>
+  <div class="BBB chord">
+    <h2>Bb Major : Bb D F : Sib Re Fa</h2>
+    <piano-chord chord="Bb" keys="14">
+      <piano-key note="Bb"></piano-key>
+      <piano-key note="D2"></piano-key>
+      <piano-key note="F2"></piano-key>
+    </piano-chord>
+  </div>
+  <div class="BBB chord">
+    <h2>Bb Minor : Bb Db F : Sib Reb Fa</h2>
+    <piano-chord chord="Bbm" keys="14">
+      <piano-key note="Bb"></piano-key>
+      <piano-key note="Db2"></piano-key>
+      <piano-key note="F2"></piano-key>
+    </piano-chord>
+  </div>
+
+  
+  <div class="BBB chord">
+    <h2>B minor B D F# - Si Re Fa#</h2>
+    <piano-chord chord="Bm" keys="14">
+      <piano-key note="B"></piano-key>
+      <piano-key note="D"></piano-key>
+      <piano-key note="F#"></piano-key>
+    </piano-chord>
+  </div>
+  
+  
+<div class="BBB chord">
+    <h2>Bb Minor : Bb Db F : Sib Reb Fa</h2>
+    <piano-chord chord="Bbm" keys="14">
+      <piano-key note="Bb"></piano-key>
+      <piano-key note="Db2"></piano-key>
+      <piano-key note="F2"></piano-key>
+    </piano-chord>
+  </div>
+
+
+</main>
+<br><hr><br>
+<main>
+
+
+
+
+
+    </main>
+<br><hr><br>
+<main>
+
+
+
+
+
+
+    </main>
+<br><hr><br>
+<main>
+
+</main>
+</section>
+
+
+
+	<section id="section3">
+		<!-- Contenu de la troisième section -->
+	</section>
+
+
+
+</body>
+</html>
